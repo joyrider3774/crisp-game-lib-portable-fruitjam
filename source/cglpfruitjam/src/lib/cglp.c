@@ -1059,9 +1059,9 @@ static void initGameOver() {
 static void updateGameOver() {
   isInGameOver = true;
   if (gameOverTicks == 20) {
-    // saveCurrentColorAndCharacterOptions();
-    // drawGameOver();    
-    // loadCurrentColorAndCharacterOptions();
+    saveCurrentColorAndCharacterOptions();
+    drawGameOver();
+    loadCurrentColorAndCharacterOptions();
   }
   if (gameOverTicks > 20 && currentInput.isJustPressed) {
     isInGameOver = false;
