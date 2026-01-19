@@ -5,6 +5,8 @@
 #include <math.h>
 #include <string.h>
 #include <Adafruit_dvhstx.h>
+#include <Adafruit_TinyUSB.h>
+#include <pio_usb.h>
 
 #include "src/lib/menu.h"
 #include "src/lib/machineDependent.h"
@@ -16,14 +18,8 @@
 #include "src/lib/vector.h"
 #include "src/lib/cglp.h"
 #include "src/i2stones.h"
-
 #include "src/glcdfont.h"
 #include "src/usbh_processor.h"
-#include <Adafruit_TinyUSB.h>
-#include <pio_usb.h>
-
-#define AUDIO_BUFFER_SIZE 4096
-#define PIN_USB_HOST_VBUS (11u)
 
 Adafruit_USBH_Host USBHost;
 
@@ -41,6 +37,9 @@ DVHSTXPinout pinConfig = ADAFRUIT_HSTXDVIBELL_CFG;
 DVHSTXPinout pinConfig = DVHSTX_PINOUT_DEFAULT;
 #endif
 
+#define AUDIO_BUFFER_SIZE 4096
+#define PIN_USB_HOST_VBUS (11u)
+
 #define RIGHTKEY 0x4F
 #define LEFTKEY 0x50
 #define DOWNKEY 0x51
@@ -50,9 +49,9 @@ DVHSTXPinout pinConfig = DVHSTX_PINOUT_DEFAULT;
 #define F2KEY 0x3B
 #define DKEY 0x07
 
-// BUTTON1 = B Ingame
+// BUTTON3 = B Ingame
 // BUTTON2 = back to menu ingame
-// BUTTON3 = A Ingame
+// BUTTON1 = A Ingame
 
 #define BUTTON1_KEY 0x06 //key C
 #define BUTTON2_KEY 0x29 //key ESC
@@ -69,17 +68,10 @@ DVHSTXPinout pinConfig = DVHSTX_PINOUT_DEFAULT;
 
 #define SAMPLERATE 44100
 
-// these must be set accordinly
-#define TFT_CS   44
-#define TFT_RST  -1
-#define TFT_DC   45
-#define TFT_BACKLIGHT 47
-
-
 DVHSTX16 tft(pinConfig, DVHSTX_RESOLUTION_320x240, true);
 
 uint16_t *fb;
-int8_t vol = 5;
+static int8_t vol = 5;
 static unsigned char clearColorR = 0;
 static unsigned char clearColorG = 0;
 static unsigned char clearColorB = 0;
@@ -99,9 +91,7 @@ static float wscale = 1.0f;
 static int debugMode = 0;
 static float mouseX = 0, mouseY = 0;
 static float prevRealMouseX = 0, prevRealMouseY = 0;
-static int channel = 0;
 static int debounce = 0;
-static bool sound_on = true;
 static int clipx = 0;
 static int clipy = 0;
 static int clipw = 0;
@@ -518,16 +508,16 @@ void setup()
     digitalWrite(PIN_5V_EN, PIN_5V_EN_STATE);
 #endif
 
-//not sure if required, doom port did this as well
 #ifdef PIN_USB_HOST_VBUS
-    printf("Enabling USB host VBUS power on GP%d\r\n", PIN_USB_HOST_VBUS);
+    //not sure if required, doom port did this as well
+    Serial.printf("Enabling USB host VBUS power on GP%d\r\n", PIN_USB_HOST_VBUS);
     gpio_init(PIN_USB_HOST_VBUS);
     gpio_set_dir(PIN_USB_HOST_VBUS, GPIO_OUT);
     gpio_put(PIN_USB_HOST_VBUS, 1);
 #endif
 
-  //same doom port did this as well i guess this fixes usb host stability
-  irq_set_priority(USBCTRL_IRQ, 0xc0);
+    //same doom port did this as well i guess this fixes usb host stability
+    irq_set_priority(USBCTRL_IRQ, 0xc0);
     pio_usb_configuration_t pio_cfg = PIO_USB_DEFAULT_CONFIG;
     pio_cfg.pin_dp = PIN_USB_HOST_DP;
     pio_cfg.tx_ch = 9; //added this otherwise would not work in combination with display saw the doom port setting this also
@@ -551,7 +541,7 @@ void setup1()
 {   
     Serial.begin(9600);
     Serial.println("Crisp Game Lib Portable");
-    // while(!Serial);
+
     if (!tft.begin()) { // Blink LED if insufficient RAM
         Serial.printf("failed to setup display\n");
         pinMode(LED_BUILTIN, OUTPUT);
