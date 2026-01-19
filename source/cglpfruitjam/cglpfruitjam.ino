@@ -5,7 +5,6 @@
 #include <math.h>
 #include <string.h>
 #include <Adafruit_dvhstx.h>
-#include <Arduino_GFX_Library.h>
 
 #include "src/lib/menu.h"
 #include "src/lib/machineDependent.h"
@@ -49,6 +48,7 @@ DVHSTXPinout pinConfig = DVHSTX_PINOUT_DEFAULT;
 
 #define F1KEY 0x3A
 #define F2KEY 0x3B
+#define DKEY 0x07
 
 // BUTTON1 = B Ingame
 // BUTTON2 = back to menu ingame
@@ -96,7 +96,7 @@ static int origViewH = 0;
 static int offsetX = 0;
 static int offsetY = 0;
 static float wscale = 1.0f;
-static int debugMode = 1;
+static int debugMode = 0;
 static float mouseX = 0, mouseY = 0;
 static float prevRealMouseX = 0, prevRealMouseY = 0;
 static int channel = 0;
@@ -473,27 +473,24 @@ void printDebugCpuRamLoad()
 {
 static int lastFPS = 0;
     static uint32_t lastPrint = 0;
-    //if(debugMode > 0 && millis() - lastPrint > 500)
-    //{
+    if(debugMode)
+    {
         int currentFPS = (int)frameRate;
-        //if (currentFPS != lastFPS) {  // Only redraw if changed
-            char debuginfo[80];
-            
-            int fps_int = (int)frameRate;
-            int fps_frac = (int)((frameRate - fps_int) * 100);
+        char debuginfo[80];
+        
+        int fps_int = (int)frameRate;
+        int fps_frac = (int)((frameRate - fps_int) * 100);
 
-            sprintf(debuginfo, "F:%3d R:%3d A:%d B:%d%% O:%d U:%d", 
-                fps_int, getFreeRam(), 
-                getActiveChannelCount(), 
-                (getBufferAvailable()*100)/getActualBufferSize(),
-                getBufferSkipCount(),
-                getBufferUnderrunCount());
-            //Serial.println(debuginfo); 
-            bufferPrint(fb, 0, 0, debuginfo, tft.color565(255,255,255), tft.color565(0,0,0), 1, font);
-            lastFPS = currentFPS;
-       // }        
-      //  lastPrint = millis();
-    //} 
+        sprintf(debuginfo, "F:%3d R:%3d A:%d B:%d%% O:%d U:%d", 
+            fps_int, getFreeRam(), 
+            getActiveChannelCount(), 
+            (getBufferAvailable()*100)/getActualBufferSize(),
+            getBufferSkipCount(),
+            getBufferUnderrunCount());
+        //Serial.println(debuginfo); 
+        bufferPrint(fb, 0, 0, debuginfo, tft.color565(255,255,255), tft.color565(0,0,0), 1, font);
+        lastFPS = currentFPS;
+    } 
 }
 
 static void setupBoardAudio()
@@ -630,6 +627,7 @@ void loop1()
 
         setMousePos(mouseX / scale, mouseY / scale);
     }
+
     updateFrame();
     
 
@@ -659,6 +657,12 @@ void loop1()
             vol++;
             if(vol > 10)
                 vol = 0;
+            debounce = millis() + 200;
+        }
+
+        if(keyPressed(DKEY) || gamepadButtonPressed(GAMEPAD_SELECT))
+        {
+            debugMode = !debugMode;
             debounce = millis() + 200;
         }
     }
