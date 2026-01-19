@@ -1,0 +1,5 @@
+/.vscode
+/build
+/release
+/output-orig.map
+/output.map
