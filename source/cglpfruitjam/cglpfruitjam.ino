@@ -585,8 +585,6 @@ void loop1()
         (pressed_buttons & BUTTON_1_MASK) || keyPressed(BUTTON1_KEY) || gamepadButtonPressed(GAMEPAD_B) || mouseButtonPressed(1), 
         (pressed_buttons & BUTTON_3_MASK) || keyPressed(BUTTON3_KEY) || gamepadButtonPressed(GAMEPAD_A) || keyPressed(BUTTON3_ALTERNATE)|| mouseButtonPressed(0) 
     ); 
-    getMouseX();
-    getMouseY();
 
     if (mouseUsed)
     {
