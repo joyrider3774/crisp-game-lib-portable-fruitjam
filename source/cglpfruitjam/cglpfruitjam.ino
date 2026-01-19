@@ -1,5 +1,3 @@
-#define MAX_CHANNELS 64
-
 #include <stdlib.h>
 #include <float.h>
 #include <math.h>
