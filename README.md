@@ -1,4 +1,4 @@
-# Adafruit's furitjam Version of crisp-game-lib-portable
+# Adafruit's fruitjam Version of crisp-game-lib-portable
 ![DownloadCountTotal](https://img.shields.io/github/downloads/joyrider3774/crisp-game-lib-portable-fruitjam/total?label=total%20downloads&style=plastic) ![DownloadCountLatest](https://img.shields.io/github/downloads/joyrider3774/crisp-game-lib-portable-fruitjam/latest/total?style=plastic) ![LatestVersion](https://img.shields.io/github/v/tag/joyrider3774/crisp-game-lib-portable-fruitjam?label=Latest%20version&style=plastic) ![License](https://img.shields.io/github/license/joyrider3774/crisp-game-lib-portable-fruitjam?style=plastic)
 
 This is a repo containing the adafruit's fruitjam port of the crisp games library which is a Minimal C-lang library for creating classic arcade-like mini-games running on devices and browsers. 
