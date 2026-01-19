@@ -575,8 +575,6 @@ void setup1()
 
 void loop1()
 {
-    static uint32_t last_print = 0;
-    
     updateI2SAudio();
     
     currentTime = micros();
