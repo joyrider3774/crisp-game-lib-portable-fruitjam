@@ -10,7 +10,7 @@
 
 // Debug configuration
 // Uncomment to enable diagnostic output every 5 seconds:
-#define I2STONES_DEBUG
+//#define I2STONES_DEBUG
 
 // Audio output modes
 enum AudioOutputMode {
