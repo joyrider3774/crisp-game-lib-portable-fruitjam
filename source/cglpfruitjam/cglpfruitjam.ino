@@ -69,7 +69,7 @@ DVHSTXPinout pinConfig = DVHSTX_PINOUT_DEFAULT;
 DVHSTX16 tft(pinConfig, DVHSTX_RESOLUTION_320x240, true);
 
 uint16_t *fb;
-static int8_t vol = 5;
+static int8_t vol = 3;
 static unsigned char clearColorR = 0;
 static unsigned char clearColorG = 0;
 static unsigned char clearColorB = 0;
@@ -277,7 +277,7 @@ void md_playTone(float freq, float duration, float when)
     
     if (delay_sec < 0) delay_sec = 0;  // Play immediately if in the past
     
-    playTone(freq, 255/10 * vol, duration, delay_sec); 
+    playTone(freq, 255/20 * vol, duration, delay_sec); 
 }
 
 void md_stopTone()
@@ -639,8 +639,8 @@ void loop1()
         if(keyPressed(F2KEY) || gamepadButtonPressed(GAMEPAD_RIGHT_SHOULDER))
         {
             vol++;
-            if(vol > 10)
-                vol = 10;
+            if(vol > 20)
+                vol = 20;
             debounce = millis() + 200;
         }
 
