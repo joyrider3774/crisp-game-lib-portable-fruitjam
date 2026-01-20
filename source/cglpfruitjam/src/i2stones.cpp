@@ -474,14 +474,20 @@ bool setupI2SAudio(uint32_t sample_rate_arg, AudioOutputMode output_mode, uint32
     Serial.println("Pre-filling I2S buffer with silence...");
     int16_t silence_sample = 0;
     int samples_written = 0;
-    while (i2s.availableForWrite() >= 4 && samples_written < 8820) {  // ~200ms @ 44.1kHz stereo
+
+    // Fill buffer to 75% capacity (leave 25% headroom for timer startup)
+    uint32_t max_samples = (actual_buffer_size * 3) / (4 * 4);  // *3/4 for 75%, /4 for stereo 16-bit
+
+    while (i2s.availableForWrite() >= 4 && samples_written < max_samples) {
         i2s.write(silence_sample);  // Left
         i2s.write(silence_sample);  // Right
         samples_written++;
     }
     Serial.print("Pre-filled ");
     Serial.print(samples_written);
-    Serial.println(" samples (~200ms buffer)");
+    Serial.print(" samples (");
+    Serial.print((samples_written * 4 * 100) / actual_buffer_size);
+    Serial.println("% of buffer)");
     
     // Setup RP2350 repeating timer - fires at 2kHz (every 500μs)
     Serial.println("7. Setting up audio generation timer...");
