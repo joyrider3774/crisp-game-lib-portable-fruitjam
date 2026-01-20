@@ -42,6 +42,8 @@ Re-implemented version of [crisp-game-lib](https://github.com/abagames/crisp-gam
 - I2sTones.cpp: I2S tones library mainly made with the help of [claude.ai](https://claude.ai)
 - glcdfont.h: Adafruit_GFX font mainly used internally to display debug information on an internal buffer
 
+## Notes
+- There are 20 volume levels, the default is set to a low value (being 3) out of safety just in case people use headphones immediatly. you can change the default on this [line](https://github.com/joyrider3774/crisp-game-lib-portable-fruitjam/blob/main/source/cglpfruitjam/cglpfruitjam.ino#L72) if you want higher volume
 
 ------------------------------------------------------------------------------------------------
 ORIGINAL README.MD
