@@ -632,7 +632,7 @@ void loop1()
         {
             vol--;
             if(vol < 0)
-                vol = 10;
+                vol = 0;
             debounce = millis() + 200;
         }
 
@@ -640,7 +640,7 @@ void loop1()
         {
             vol++;
             if(vol > 10)
-                vol = 0;
+                vol = 10;
             debounce = millis() + 200;
         }
 
