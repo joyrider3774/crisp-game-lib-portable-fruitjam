@@ -504,7 +504,7 @@ void setupButtons()
 void setup()
 {
     multicore_reset_core1();
-    multicore_launch_core1_with_stack(setup1, core1_stack, CORE1_STACK_SIZE);
+    multicore_launch_core1_with_stack(core1_entry, core1_stack, CORE1_STACK_SIZE);
 
 #ifdef PIN_5V_EN
     pinMode(PIN_5V_EN, OUTPUT);
@@ -540,7 +540,15 @@ void loop()
    delayMicroseconds(100);
 }
 
-void setup1()
+void core1_entry() {
+    core1_setup();
+    
+    while(true) {
+        core1_loop();
+    }
+}
+
+void core1_setup()
 {   
     Serial.begin(9600);
     Serial.println("Crisp Game Lib Portable");
@@ -564,13 +572,9 @@ void setup1()
     loadHighScores();
     currentTime = micros();
     lastTime = 0;
-
-    while(true) {
-        loop1();
-    }
 }
 
-void loop1()
+void core1_loop()
 {
     updateI2SAudio();
     
