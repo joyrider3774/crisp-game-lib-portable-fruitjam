@@ -19,6 +19,9 @@
 #include "src/glcdfont.h"
 #include "src/usbh_processor.h"
 
+#define CORE1_STACK_SIZE (8 * 1024)  // 8KB instead of default 4KB
+static uint32_t core1_stack[CORE1_STACK_SIZE / sizeof(uint32_t)];
+
 Adafruit_USBH_Host USBHost;
 
 #if defined(ADAFRUIT_FEATHER_RP2350_HSTX)
@@ -457,9 +460,9 @@ void bufferPrint(uint16_t* fb, int16_t x, int16_t y, const char* str, uint16_t c
     }
 }
 
-void printDebugCpuRamLoad()    
+void printDebugCpuRamLoad()
 {
-static int lastFPS = 0;
+    static int lastFPS = 0;
     static uint32_t lastPrint = 0;
     if(debugMode)
     {
@@ -500,6 +503,8 @@ void setupButtons()
 
 void setup()
 {
+    multicore_reset_core1();
+    multicore_launch_core1_with_stack(setup1, core1_stack, CORE1_STACK_SIZE);
 
 #ifdef PIN_5V_EN
     pinMode(PIN_5V_EN, OUTPUT);
@@ -558,7 +563,11 @@ void setup1()
     initGame();
     loadHighScores();
     currentTime = micros();
-    lastTime = 0; 
+    lastTime = 0;
+
+    while(true) {
+        loop1();
+    }
 }
 
 void loop1()
