@@ -34,6 +34,7 @@ Re-implemented version of [crisp-game-lib](https://github.com/abagames/crisp-gam
 - **Adafruit_dvhstx**: for video output
 - **Adafruit_TinyUSB**: for usbhost mode for keyboard, joypad and mouse input
 - **Adafruit_TLV320DAC3100**: for I2S sound output
+- **PICO PIO USB:** for usbhost stuff
 
 ## Credits
 - Crisp games library portable and it's games are made by user [abagames](https://github.com/abagames)
