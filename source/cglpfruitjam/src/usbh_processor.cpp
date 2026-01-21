@@ -50,7 +50,7 @@ typedef struct
 
 GamePadReport GamePadConfigs[] = {
     //{productid, vendorid, L,LV,LM,R,RV,RM,U,UV,UM,D,DV,DM,A,AV,AM,B,BV,BM,X,XV,XM,Y,YV,YM,LS,LSV,LSM,RS,RSV,RSM,SELECT,SELECTV,SELECTM,START,STARTV,STARTM}
-    //snes padd from adafruit (not tested)
+    //snes padd from adafruit (tested thanks Lord Rybec)
     {58369,2079,0,0x00,false,0,0xFF,false,1,0x00,false,1,0xFF,false,5,0x2F,true,5,0x4F,true, 5,0x1F,true, 5,0x8F,true,6,0x01,true,6,0x02,true,6,0x10,true,6,0x20,true},
     //ps1 none dualshock using my adaptor
     {34918,2341,2,0x00,false,2,0xFF,false,3,0x00,false,3,0xFF,false,0,0x04,true,0,0x02,true,0,0x08,true,0,0x01,true,0,0x40,true,0,0x80,true,1,0xf2,false,1,0xf1,false},
