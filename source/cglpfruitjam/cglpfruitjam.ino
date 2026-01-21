@@ -474,7 +474,7 @@ void printDebugCpuRamLoad()
         float cpuTemp = analogReadTemp();
         int cpuTemp_int = (int)cpuTemp;
         int cpuTemp_frac = (int)((cpuTemp - cpuTemp_int) * 100);
-        sprintf(debuginfo, "F:%3d R:%3d A:%d B:%d%% O:%d U:%d C:%d", 
+        sprintf(debuginfo, "F:%3d R:%3d A:%2d B:%d%% O:%d U:%d C:%2d.%2d", 
             fps_int, getFreeRam(), 
             getActiveChannelCount(), 
             (getBufferAvailable()*100)/getActualBufferSize(),
