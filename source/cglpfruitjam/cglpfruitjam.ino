@@ -471,17 +471,22 @@ void printDebugCpuRamLoad()
         
         int fps_int = (int)frameRate;
         int fps_frac = (int)((frameRate - fps_int) * 100);
-
-        sprintf(debuginfo, "F:%3d R:%3d A:%d B:%d%% O:%d U:%d", 
+        float cpuTemp = analogReadTemp();
+        int cpuTemp_int = (int)cpuTemp;
+        int cpuTemp_frac = (int)((cpuTemp - cpuTemp_int) * 100);
+        sprintf(debuginfo, "F:%3d R:%3d A:%d B:%d%% O:%d U:%d C:%d", 
             fps_int, getFreeRam(), 
             getActiveChannelCount(), 
             (getBufferAvailable()*100)/getActualBufferSize(),
             getBufferSkipCount(),
-            getBufferUnderrunCount());
+            getBufferUnderrunCount(),
+            cpuTemp_int,
+            cpuTemp_frac
+        );
         //Serial.println(debuginfo); 
         bufferPrint(fb, 0, 0, debuginfo, tft.color565(255,255,255), tft.color565(0,0,0), 1, font);
         lastFPS = currentFPS;
-    } 
+    }
 }
 
 static void setupBoardAudio()
@@ -536,8 +541,8 @@ void setup()
 
 void loop()
 {
-   USBHost.task();
-   delayMicroseconds(100);
+    USBHost.task();
+    delayMicroseconds(100);
 }
 
 void core1_entry() {
