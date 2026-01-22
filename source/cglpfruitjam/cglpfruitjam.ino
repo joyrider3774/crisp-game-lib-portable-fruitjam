@@ -528,7 +528,7 @@ void setup()
     irq_set_priority(USBCTRL_IRQ, 0xc0);
     pio_usb_configuration_t pio_cfg = PIO_USB_DEFAULT_CONFIG;
     pio_cfg.pin_dp = PIN_USB_HOST_DP;
-    pio_cfg.tx_ch = 9; //added this otherwise would not work in combination with display saw the doom port setting this also
+    pio_cfg.tx_ch = 8; //use a free dma channel 0-4 seemed to be in use and default was 0
     USBHost.configure_pio_usb(1, &pio_cfg); 
     if(!USBHost.begin(1))
     {
