@@ -46,6 +46,7 @@ Re-implemented version of [crisp-game-lib](https://github.com/abagames/crisp-gam
 ## Notes
 - There are 20 volume levels, the default is set to a low value (being 3) out of safety just in case people use headphones immediatly. you can change the default on this [line](https://github.com/joyrider3774/crisp-game-lib-portable-fruitjam/blob/main/source/cglpfruitjam/cglpfruitjam.ino#L72) if you want higher volume
 - Adafruit snes gamepad input controls should work now, a bug preventing it from working has been fixed and it has been tested by Lord Rybec from adafruit discord, Thanks for that and providing helpfull debug information
+- Please use arduino-pico 5.5.0 or newer board setup, it seems to have fixed usbhost disconnects
 ------------------------------------------------------------------------------------------------
 ORIGINAL README.MD
 ------------------------------------------------------------------------------------------------
