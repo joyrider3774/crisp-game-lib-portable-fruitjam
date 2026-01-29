@@ -48,7 +48,9 @@ Re-implemented version of [crisp-game-lib](https://github.com/abagames/crisp-gam
 - Adafruit snes gamepad input controls should work now, a bug preventing it from working has been fixed and it has been tested by Lord Rybec from adafruit discord, Thanks for that and providing helpfull debug information
 - Please use arduino-pico 5.5.0 or newer board setup, it seems to have fixed usbhost disconnects
 ------------------------------------------------------------------------------------------------
+
 ORIGINAL README.MD
+
 ------------------------------------------------------------------------------------------------
 
 ## Target devices
