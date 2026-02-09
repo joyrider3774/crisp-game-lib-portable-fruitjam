@@ -101,10 +101,8 @@ static bool endFrame = true;
 static int screenOffsetX = 0;
 static int screenOffsetY = 0;
 
-extern "C" char* sbrk(int incr);
-uint16_t getFreeRam() {	
-	char top;
-	return &top - reinterpret_cast<char*>(sbrk(0));
+uint32_t getFreeRam() {
+  return rp2040.getFreeHeap();
 }
 
 
